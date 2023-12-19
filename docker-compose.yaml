@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  biodash:
+    container_name: 'langchain-dash-biodash'
+    image: python:langchain
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8088:8080
+    environment:
+      - REDIS_HOST=redis-stack
+      - REDIS_PORT=6379
+      - OPENAI_SECRET_KEY=
+    depends_on:
+      - redis-stack
+
+  redis-stack:
+    container_name: 'langchain-redis-stack'
+    image: redis/redis-stack:latest
+    restart: always
+    #environment:
+    #  REDIS_ARGS: "--requirepass password"
+    ports:
+      - 6379:6379
+      - 8001:8001

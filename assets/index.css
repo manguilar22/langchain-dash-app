@@ -1,0 +1,215 @@
+/* Set background color for the entire viewport */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Set background color for the body */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+/* Add a background image to the body */
+body {
+  background-image: url('blue.jpg'); /* Replace 'background-image.jpg' with your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+/* Gradient background */
+body {
+  background: linear-gradient(to right, #3498db, #2ecc71);
+  color: #fff;
+}
+
+
+/* Styles for buttons */
+/* Styles for all buttons */
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Primary button style */
+button.primary {
+  color: #fff;
+  background-color: #3498db;
+}
+
+/* Secondary button style */
+button.secondary {
+  color: #fff;
+  background-color: #2ecc71;
+}
+
+/* Danger button style */
+button.danger {
+  color: #fff;
+  background-color: #e74c3c;
+}
+
+/* Hover effect */
+button:hover {
+  background-color: #555;
+}
+
+/* Disabled state */
+button:disabled {
+  background-color: #f2f2f2;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+
+/* Styles for textarea */
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical; /* Allow vertical resizing */
+}
+
+/* Hover and focus effects */
+textarea:hover,
+textarea:focus {
+  border-color: #3498db; /* Change border color on hover and focus */
+}
+
+/* Disabled state */
+textarea:disabled {
+  background-color: #f2f2f2; /* Light gray background for disabled state */
+  cursor: not-allowed;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Shared styles for download buttons */
+button.download-button {
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Styles for gene-input-1 */
+#gene-input-1 input {
+  /* Additional styles specific to gene-input-1 */
+}
+
+/* Styles for gene-button-submit */
+#gene-button-submit button {
+  background-color: #4caf50;
+}
+
+/* Styles for loading-output-1 */
+#loading-output-1 div {
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Styles for dataset */
+#dataset textarea {
+  height: 150px;
+  box-sizing: border-box;
+}
+
+p {
+  color: black;
+}
+
+/* Styles for dataset-closure */
+#dataset-closure p {
+  font-style: italic;
+  color: #666;
+}
+
+/* Styles for download buttons */
+#dataset-download-button button.download-button {
+  background-color: #3498db;
+}
+
+#comments-download-button button.download-button {
+  background-color: #e74c3c;
+}
+
+#cross-references-download-button button.download-button {
+  background-color: #2ecc71;
+}
+
+/* Styles for chatgpt-operations */
+#chatgpt-operations div {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Styles for chatgpt-input */
+#chatgpt-input input {
+  /* Additional styles specific to chatgpt-input */
+}
+
+/* Styles for chatgpt-button-submit */
+#chatgpt-button-submit button {
+  background-color: #3498db;
+}
+
+/* Styles for chatgpt-response */
+#chatgpt-response div {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Styles for chatgpt-context-download-button */
+#chatgpt-context-download-button {
+  background-color: #2ecc71;
+}
+
+/*
+gene-input-1 input {}
+gene-button-submit button {}
+loading-output-1 div {}
+dataset textarea{}
+dataset-closure p {}
+dataset-download-button button {}
+comments-download-button button {}
+cross-references-download-button button {}
+chatgpt-operations div {}
+#chatgpt-input input{}
+#chatgpt-button-submit button{}
+#chatgpt-response div {}
+#chatgpt-context-download-button button {}
+ */
