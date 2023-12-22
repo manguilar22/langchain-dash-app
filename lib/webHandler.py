@@ -3,7 +3,7 @@ import os
 from .service import summary as getSummary
 from .cache import Cache
 from .exporter import summary_dataset, parse_comments, parse_cross_references
-from .embeddings import comments_embeddings, datasets_embeddings
+from .embeddings import comments_embeddings, datasets_embeddings, references_embeddings
 
 
 REDIS_HOST = os.getenv('REDIS_HOST','127.0.0.1')
@@ -17,7 +17,9 @@ def _stripInput(inputValueStr):
 def createEmbeddings(inputValue):
     datasetEmbeddings = createCommentsEmbeddings(inputValue)
     commentsEmbeddings = createDatasetEmbeddings(inputValue)
-    stringEmbeddings = sum([commentsEmbeddings, datasetEmbeddings], [])
+    referencesEmbeddings = createCrossReferenceEmbeddings(inputValue)
+
+    stringEmbeddings = sum([datasetEmbeddings,commentsEmbeddings,referencesEmbeddings], [])
     return stringEmbeddings
 
 def createDatasetEmbeddings(inputValue):
@@ -46,6 +48,38 @@ def createDatasetEmbeddings(inputValue):
         return embeddings
     except Exception as err:
         print(f'comments embeddings, error={err}')
+        return []
+    finally:
+        cache.db.close()
+
+
+def createCrossReferenceEmbeddings(inputValue):
+    print(f'cross references embeddings input: {inputValue}')
+
+    try:
+        cache = Cache(REDIS_HOST, REDIS_PASSWORD)
+
+        embeddings = []
+
+        for key in _stripInput(inputValue).split(","):
+            commentEmbeddings = cache.db.json().get(f'references_embeddings:{key.strip()}')
+
+            if commentEmbeddings:
+                print(f'cache hit for references_embeddings:{key.strip()}')
+                embeddings.extend(commentEmbeddings)
+            elif key != '':
+                print(f'cache miss for references_embeddings:{key.strip()}')
+                references = cache.db.json().get(f'references:{key.strip()}')
+                vectors = references_embeddings(references)
+                cache.db.json().set(f'references_embeddings:{key.strip()}','$',vectors)
+                embeddings.extend(vectors)
+            else:
+                print(f'empty string: {key}')
+
+        return embeddings
+
+    except Exception as err:
+        print(f'cross references embedding={err}')
         return []
     finally:
         cache.db.close()

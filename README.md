@@ -13,6 +13,8 @@ A methodology known as a retrieval-augmented generation chain, or simply RAG.
 docker-compose -f docker-compose.yaml up -d
 ```
 
+Set the `OPENAI_SECRET_KEY` environment variable to enable Chat-GPT interaction. 
+
 ### Deployment with Authentication
 
 In the docker-compose.yaml file you will have to set the **REDIS_PASSWORD** environment variable for the python container.
@@ -44,12 +46,22 @@ the EIF3C gene (UniProt: B5DFC8) in Rattus norvegicus (Rat) encodes a protein of
 ### Comments
 
 ```
-the {} {} from the {} {} species with a primary accession code of {} has the following comment: \"{}\"
+the {} {} (UniProt: {}) in the {} ({}) species has the following comment: \"{}\"
 ```
 
 Example Text
 ```
-the FOXM1 gene from the Homo sapiens Human species with a primary accession code of Q08050 has the following comment: "Interacts with PINT87aa..."
+"the FOXM1 gene (UniProt: Q08050) in the Homo sapiens (Human) species has the following comment: "Interacts with...""
+```
+
+### Cross References 
+```
+the {} {} (UniProt: {}) in the {} ({}) species has the following reference in the {} database: {}
+```
+
+Example Text:
+```
+"the EIF3C gene (UniProt: Q4QR58) in the Xenopus laevis (African clawed frog) species has the following reference in the AlphaFoldDB database: Q4QR58"
 ```
 
 ## UniProt

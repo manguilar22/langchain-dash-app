@@ -104,6 +104,14 @@ textarea:disabled {
   cursor: not-allowed;
 }
 
+a {
+  color: blue; /* Link text color (Blue) */
+  text-decoration: none; /* Remove underline */
+  margin: 0 10px; /* Margin on both sides, adjust as needed */
+  padding: 5px 10px; /* Padding for better click/tap target, adjust as needed */
+  transition: color 0.3s ease-in-out; /* Smooth color transition */
+}
+
 input {
   width: 100%;
   padding: 10px;

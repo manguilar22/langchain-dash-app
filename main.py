@@ -4,17 +4,18 @@ import os
 from dash import Dash, html, dcc, Output, Input, State
 from lib import exporter, webHandler, llm
 
-OPENAPI_KEY = os.getenv('OPENAI_SECRET_KEY',None)
-REDIS_HOST = os.getenv('REDIS_HOST','127.0.0.1')
-REDIS_PORT = os.getenv('REDIS_PORT')
+OPENAPI_KEY = os.getenv('OPENAI_SECRET_KEY', None)
+REDIS_HOST = os.getenv('REDIS_HOST', '127.0.0.1')
+REDIS_PORT = os.getenv('REDIS_PORT', '6379')
 
 app = Dash(__name__, suppress_callback_exceptions=True, assets_folder='assets')
 
 app.layout = html.Div([
     html.Title(children='Conversational Tool'),
     html.H1(children='UniProt Conversational Portal'),
+    html.A(id='uniprot-link', children='www.uniprot.org',href='https://www.uniprot.org/',target='_blank'),
     html.Div(children=[
-        dcc.Input(id='gene-input-1',placeholder='type gene id or list of ids',name='gene-input-1'),
+        dcc.Input(id='gene-input-1', placeholder='type gene id or list of ids',name='gene-input-1'),
         html.Button(id='gene-button-submit', children='Submit', n_clicks=0, type='submit', name='gene-button-submit'),
         dcc.Loading(type='default', fullscreen=True, children=html.Div(id='loading-output-1',children=[]))
     ])
@@ -63,7 +64,7 @@ def loading_datasets(n_clicks, value):
 
 
 @app.callback(Output('chatgpt-response', 'children'),
-              Input('chatgpt-button-submit','n_clicks'),
+              Input('chatgpt-button-submit', 'n_clicks'),
               State('gene-input-1', 'value'),
               State('chatgpt-input', 'value'),
               prevent_initial_call=True
@@ -89,7 +90,7 @@ def chatgpt_response(chatGptButtonClick,geneInputValue,humanInputValue):
                 print(f'Langchain Enabled, embeddings size={len(stringEmbeddings)}')
                 chatGPT = llm.LLM(OPENAPI_KEY)
                 chain = chatGPT.embeddings_chain(processedVectors=stringEmbeddings)
-                content = chain.invoke(humanInputValue)
+                content = chain.invoke(dict(question=humanInputValue))
                 print(f'Langchain Response Done')
             else:
                 content = "OPENAI API key has not been provided, chat-gpt is disabled."
@@ -105,17 +106,14 @@ def chatgpt_response(chatGptButtonClick,geneInputValue,humanInputValue):
             return [dcc.Markdown(children=f'# {str(err)}')]
 
 
+# Downloads
+
 @app.callback(Output('chatgpt-context-download-output', 'data'),
               Input('chatgpt-context-download-button', 'n_clicks'),
               State('gene-input-1', 'value'))
 def downloadChatGptContext(n_clicks, value):
     if not n_clicks is None:
-        embeddings = []
-        datasetEmbeddings = webHandler.createDatasetEmbeddings(value)
-        commentsEmbeddings = webHandler.createCommentsEmbeddings(value)
-
-        embeddings.extend(datasetEmbeddings)
-        embeddings.extend(commentsEmbeddings)
+        embeddings = webHandler.createEmbeddings(value)
 
         txt = json.dumps(embeddings)
 

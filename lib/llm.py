@@ -4,6 +4,8 @@ from langchain.prompts import ChatPromptTemplate
 from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnableLambda, RunnablePassthrough
 from langchain.vectorstores import FAISS
+from operator import itemgetter
+
 
 class LLM:
 
@@ -65,15 +67,20 @@ class LLM:
         vectorstore = FAISS.from_texts(texts=processedVectors, embedding=OpenAIEmbeddings(openai_api_key=self.api_key))
         retriever = vectorstore.as_retriever()
 
-        template = """Answer the question based on the following context and be verbose, respond with MARKDOWN:
+        template = """Answer the question based on the following context and be verbose:
             {context}
 
             Question: {question}
+            
+            Answer in the following format: MARKDOWN
             """
         prompt = ChatPromptTemplate.from_template(template)
 
         chain = (
-                {"context": retriever, "question": RunnablePassthrough()}
+                {
+                 "context": itemgetter('question') | retriever,
+                 "question": itemgetter('question')
+                 }
                 | prompt
                 | self.model
                 | StrOutputParser()
