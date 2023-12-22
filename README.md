@@ -1,4 +1,6 @@
-# Conversational UniProt Knowledge Base
+# UniProt Conversational Agent
+
+Uniprot Knowledge Base: [www.uniprot.org](https://www.uniprot.org/)
 
 ## Abstract
 
@@ -13,12 +15,13 @@ A methodology known as a retrieval-augmented generation chain, or simply RAG.
 docker-compose -f docker-compose.yaml up -d
 ```
 
-Set the `OPENAI_SECRET_KEY` environment variable to enable Chat-GPT interaction. 
+Set the `OPENAI_SECRET_KEY` environment variable to enable Chat-GPT interaction.
+Set the `REDIS_PASSWORD` environment variable to authenticate with Redis when authentication's enabled.
 
 ### Deployment with Authentication
 
-In the docker-compose.yaml file you will have to set the **REDIS_PASSWORD** environment variable for the python container.
-The password must match the command-line argument passed into redis. As an example: 
+In the docker-compose.yaml file you will have to set the `REDIS_PASSWORD` environment variable for the python container.
+The password must match the command-line argument passed into Redis. As an example: 
 
 ```yaml
 ...
@@ -29,11 +32,13 @@ The password must match the command-line argument passed into redis. As an examp
 
 ## Prompt Engineering - Text Embeddings 
 
-Create the statements to be used by Chat-GPT as context. - [recipe](https://python.langchain.com/docs/expression_language/cookbook/retrieval#conversational-retrieval-chain)
+Following the [recipe](https://python.langchain.com/docs/expression_language/cookbook/retrieval) to create a Retrieval-Augmented Generation (RAG) from langchain. 
+A RAG uses context provided to better respond to questions.
+Below are the string templates used in creating text embeddings for the data processed from the UniProt REST API response.  
 
-### Entry 
 
-Template. 
+### Dataset 
+
 ```
 the {} {} (UniProt: {}) in {} ({}) encodes a protein of {} amino acids with a molecular weight of {} Daltons. Found in the UniProt database as {}, the protein sequence is {}
 ```
@@ -43,7 +48,7 @@ Example Text
 the EIF3C gene (UniProt: B5DFC8) in Rattus norvegicus (Rat) encodes a protein of 911 amino acids with a molecular weight of 105435 Daltons. Found in the UniProt database as UniProtKB reviewed (Swiss-Prot), the protein sequence is MMM....
 ```
 
-### Comments
+### Comment
 
 ```
 the {} {} (UniProt: {}) in the {} ({}) species has the following comment: \"{}\"
@@ -54,7 +59,7 @@ Example Text
 "the FOXM1 gene (UniProt: Q08050) in the Homo sapiens (Human) species has the following comment: "Interacts with...""
 ```
 
-### Cross References 
+### Cross Reference
 ```
 the {} {} (UniProt: {}) in the {} ({}) species has the following reference in the {} database: {}
 ```
