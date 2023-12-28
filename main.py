@@ -4,6 +4,7 @@ import os
 from dash import Dash, html, dcc, Output, Input, State
 from lib import exporter, webHandler, llm
 
+DASH_DEBUG_FLAG = os.getenv('DEBUG', True)
 OPENAPI_KEY = os.getenv('OPENAI_SECRET_KEY', None)
 REDIS_HOST = os.getenv('REDIS_HOST', '127.0.0.1')
 REDIS_PORT = os.getenv('REDIS_PORT', '6379')
@@ -80,9 +81,9 @@ def chatgpt_response(chatGptButtonClick,geneInputValue,humanInputValue):
         return [dcc.Markdown("""### Talk to ChatGPT about your dataset.""")]
     else:
         try:
-            datasets = webHandler.handleDatasets(geneInputValue)
-            comments = webHandler.handleComments(geneInputValue)
-            references = webHandler.handleCrossReferences(geneInputValue)
+            #datasets = webHandler.handleDatasets(geneInputValue)
+            #comments = webHandler.handleComments(geneInputValue)
+            #references = webHandler.handleCrossReferences(geneInputValue)
 
             stringEmbeddings = webHandler.createEmbeddings(geneInputValue)
 
@@ -103,7 +104,8 @@ def chatgpt_response(chatGptButtonClick,geneInputValue,humanInputValue):
                 dcc.Download(id='chatgpt-context-download-output'),
             ]
         except Exception as err:
-            return [dcc.Markdown(children=f'# {str(err)}')]
+            logMessage = html.P(children=f'error computing with text embeddings: {err}')
+            return [logMessage]
 
 
 # Downloads
@@ -154,4 +156,4 @@ def crossReferencesDownload(n_clicks, value):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port='8080')
+    app.run(debug=DASH_DEBUG_FLAG, host='0.0.0.0', port='8080')

@@ -10,6 +10,7 @@ COPY requirements.txt .
 RUN ["pip", "install", "--upgrade", "pip"]
 RUN ["pip", "install", "-r", "requirements.txt"]
 
+ENV DEBUG "False"
 ENV OPENAI_SECRET_KEY ""
 ENV REDIS_HOST "127.0.0.1"
 ENV REDIS_PORT ""

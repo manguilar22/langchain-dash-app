@@ -6,7 +6,7 @@ Uniprot Knowledge Base: [www.uniprot.org](https://www.uniprot.org/)
 
 UniProt serves as a comprehensive knowledge base for gene and protein data, made accessible to developers through a REST API. 
 With the biological information present, text embeddings are created for each protein and gene within UniProt.
-These embeddings enhance Chat-GPT's responses by providing a rich contextual foundation when addressing user queries. 
+These embeddings enhance Chat-GPT's responses by providing a contextual foundation when answering queries. 
 A methodology known as a retrieval-augmented generation chain, or simply RAG.
 
 ## Deployment 
@@ -16,7 +16,7 @@ docker-compose -f docker-compose.yaml up -d
 ```
 
 Set the `OPENAI_SECRET_KEY` environment variable to enable Chat-GPT interaction.
-Set the `REDIS_PASSWORD` environment variable to authenticate with Redis when authentication's enabled.
+Set the `REDIS_PASSWORD` environment variable to authenticate with Redis when authentication is enabled.
 
 ### Deployment with Authentication
 
@@ -32,9 +32,9 @@ The password must match the command-line argument passed into Redis. As an examp
 
 ## Prompt Engineering - Text Embeddings 
 
-Following the [recipe](https://python.langchain.com/docs/expression_language/cookbook/retrieval) to create a Retrieval-Augmented Generation (RAG) from langchain. 
-A RAG uses context provided to better respond to questions.
-Below are the string templates used in creating text embeddings for the data processed from the UniProt REST API response.  
+Following the [recipe](https://python.langchain.com/docs/expression_language/cookbook/retrieval) to implement Retrieval-Augmented Generation (RAG) with langchain. 
+A RAG uses context to better respond to questions.
+Below are the string templates used in creating text embeddings for the data processed from the UniProt REST API.
 
 
 ### Dataset 

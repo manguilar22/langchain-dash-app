@@ -22,6 +22,7 @@ def createEmbeddings(inputValue):
     stringEmbeddings = sum([datasetEmbeddings,commentsEmbeddings,referencesEmbeddings], [])
     return stringEmbeddings
 
+
 def createDatasetEmbeddings(inputValue):
     print(f'dataset embeddings input: {inputValue}')
 
@@ -233,4 +234,3 @@ def handleGeneInput(inputValue):
         raise err
     finally:
         db.close()
-

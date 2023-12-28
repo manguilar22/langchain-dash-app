@@ -27,21 +27,6 @@ class LLM:
             return str(err)
 
 
-    def sentiment_analysis(self, csvDump):
-        try:
-            prompt = ChatPromptTemplate.from_template('as a chemist summarize and expand on the comments and respond in MARKDOWN\n {csvDump}')
-            chain = prompt | self.model
-
-            print('sentiment_analysis: {}'.format(prompt.format(csvDump=len(csvDump))))
-            query = chain.invoke({'csvDump': csvDump})
-            content = query.content
-
-            print(f'content: {content}')
-            return content
-        except Exception as err:
-            return str(err)
-
-
     def summary(self, csvDump):
         try:
             prompt = ChatPromptTemplate.from_template("as a chemist expand on the dataset and respond in MARKDOWN\n {csvDump}")
