@@ -81,9 +81,9 @@ def chatgpt_response(chatGptButtonClick,geneInputValue,humanInputValue):
         return [dcc.Markdown("""### Talk to ChatGPT about your dataset.""")]
     else:
         try:
-            #datasets = webHandler.handleDatasets(geneInputValue)
-            #comments = webHandler.handleComments(geneInputValue)
-            #references = webHandler.handleCrossReferences(geneInputValue)
+            datasets = webHandler.handleDatasets(geneInputValue)
+            comments = webHandler.handleComments(geneInputValue)
+            references = webHandler.handleCrossReferences(geneInputValue)
 
             stringEmbeddings = webHandler.createEmbeddings(geneInputValue)
 

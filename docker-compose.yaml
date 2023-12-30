@@ -4,7 +4,7 @@ services:
 
   biodash:
     container_name: 'langchain-dash-biodash'
-    image: python:langchain
+    image: manguilar22/python:langchain
     restart: always
     build:
       context: .

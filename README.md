@@ -34,8 +34,8 @@ The password must match the command-line argument passed into Redis. As an examp
 
 Following the [recipe](https://python.langchain.com/docs/expression_language/cookbook/retrieval) to implement Retrieval-Augmented Generation (RAG) with langchain. 
 A RAG uses context to better respond to questions.
-Below are the string templates used in creating text embeddings for the data processed from the UniProt REST API.
-
+The context is provided as a list of strings containing relevnt information.
+The text embeddings are created from the UniProt's REST API response. 
 
 ### Dataset 
 
