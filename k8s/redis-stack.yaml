@@ -1,0 +1,27 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: langchain-redis-stack
+  labels:
+    app: langchain-redis-stack
+    database: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: langchain-redis-stack
+  template:
+    metadata:
+      labels:
+        app: langchain-redis-stack
+    spec:
+      containers:
+        - name: langchain-redis-stack
+          image: redis/redis-stack:latest
+          ports:
+            - containerPort: 8001
+              protocol: TCP
+              name: http-portal
+            - containerPort: 6379
+              protocol: TCP 
+              name: redis-endpoint

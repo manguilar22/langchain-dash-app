@@ -1,0 +1,35 @@
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: langchain-dash-app 
+  labels: 
+    app: langchain-dash-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: langchain-dash-app
+  template:
+    metadata:
+      labels:
+        app: langchain-dash-app
+    spec:
+      containers:
+        - name: langchain-dash-app
+          image: manguilar22/python:langchain  
+          env: 
+           - name: DEBUG
+             value: "True"
+           - name: REDIS_HOST
+             value: langchain-redis-stack-svc
+           - name: REDIS_PORT
+             value: "6379"
+           - name: OPENAI_SECRET_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: openai-api-key
+                 key: OPENAI_API_KEY
+          ports: 
+            - containerPort: 8080
+              protocol: TCP 
+              name: http-port    
